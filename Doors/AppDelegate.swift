@@ -9,6 +9,9 @@ import UIKit
 import Firebase
 import FirebaseAnalytics
 import FirebaseCore
+/*import FirebaseFirestore
+import FirebaseMessaging
+import UserNotifications*/
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -65,6 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
       let token = tokenParts.joined()
       print("Device Token: \(token)")
+      //OJU
+      /*let pushManager = PushNotificationManager(userID: "currently_logged_in_user_id")
+      pushManager.updateFirestorePushTokenIfNeeded()*/
     }
     
     func application(

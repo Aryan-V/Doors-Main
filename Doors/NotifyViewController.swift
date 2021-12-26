@@ -236,6 +236,10 @@ class NotifyViewController: UIViewController {
     
     func sendNotificationDoor(message: String) {
         print("RECEIVED: " + message)
+        //OJU
+        //tryna get token from firestore usertable now
+        /*let sender = PushNotificationSender()
+        sender.sendPushNotification(to: "token", title: "Doors", body: message)*/
     }
     
     

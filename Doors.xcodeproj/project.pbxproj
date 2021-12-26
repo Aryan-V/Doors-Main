@@ -22,6 +22,8 @@
 		0EF985632768050300D4C1CA /* MessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF985622768050300D4C1CA /* MessageClient.swift */; };
 		BCF22D1A53DA3B7660150947 /* Pods_Doors_DoorsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE91D0AF355771D8F2445A7E /* Pods_Doors_DoorsUITests.framework */; };
 		D68B095B39B8BD792B6C1746 /* Pods_Doors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B43DC6D93B98C2D33ACAF38 /* Pods_Doors.framework */; };
+		EBF4F5FF2779239F00098578 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4F5FE2779239F00098578 /* PushNotificationManager.swift */; };
+		EBF4F6012779303200098578 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4F6002779303200098578 /* PushNotificationSender.swift */; };
 		EC09F99D3AC2F899A593A858 /* Pods_DoorsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404F948502C09FD396FEE9C5 /* Pods_DoorsTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +70,8 @@
 		AE91D0AF355771D8F2445A7E /* Pods_Doors_DoorsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Doors_DoorsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF4896B329727A31207C123F /* Pods-DoorsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoorsTests.debug.xcconfig"; path = "Target Support Files/Pods-DoorsTests/Pods-DoorsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C0C4B02BFC3680549E828033 /* Pods-DoorsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoorsTests.release.xcconfig"; path = "Target Support Files/Pods-DoorsTests/Pods-DoorsTests.release.xcconfig"; sourceTree = "<group>"; };
+		EBF4F5FE2779239F00098578 /* PushNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
+		EBF4F6002779303200098578 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		F0CCCD9F56914AF55DCFD8C3 /* Pods-Doors.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Doors.release.xcconfig"; path = "Target Support Files/Pods-Doors/Pods-Doors.release.xcconfig"; sourceTree = "<group>"; };
 		F1C83EC873F08CCE4C739F43 /* Pods-Doors-DoorsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Doors-DoorsUITests.release.xcconfig"; path = "Target Support Files/Pods-Doors-DoorsUITests/Pods-Doors-DoorsUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,6 +141,8 @@
 				0E0C67AB2765B0B300D179B0 /* Assets.xcassets */,
 				0E0C67AD2765B0B300D179B0 /* LaunchScreen.storyboard */,
 				0E0C67B02765B0B300D179B0 /* Info.plist */,
+				EBF4F5FE2779239F00098578 /* PushNotificationManager.swift */,
+				EBF4F6002779303200098578 /* PushNotificationSender.swift */,
 			);
 			path = Doors;
 			sourceTree = "<group>";
@@ -429,12 +435,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBF4F5FF2779239F00098578 /* PushNotificationManager.swift in Sources */,
 				0EF985632768050300D4C1CA /* MessageClient.swift in Sources */,
 				0E0C67A72765B0B200D179B0 /* ViewController.swift in Sources */,
 				0E3CB167276697710031F80D /* NotifyViewController.swift in Sources */,
 				0E0C67A32765B0B200D179B0 /* AppDelegate.swift in Sources */,
 				0E0C67A52765B0B200D179B0 /* SceneDelegate.swift in Sources */,
 				0E3CB16527667D1D0031F80D /* PreferencesViewController.swift in Sources */,
+				EBF4F6012779303200098578 /* PushNotificationSender.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
