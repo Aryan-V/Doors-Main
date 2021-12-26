@@ -8,7 +8,6 @@ target 'Doors' do
   
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
-  pod 'Firebase/AdMob'
   pod 'Firebase/Database'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
