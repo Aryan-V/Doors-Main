@@ -126,13 +126,13 @@ class NotifyViewController: UIViewController {
     func displayWelcomeName() {
         let nameInput = self.defaults.string(forKey: "nameInput")
         
-        var cont = false
+//        var cont = false
         
         if (nameInput == nil || nameInput == "") {
             let welcomeAlert = UIAlertController(title: "Welcome to Doors!", message: "After you've set your preferences, swipe down the screen and begin using Doors!", preferredStyle: .alert)
 
             let continueAction = UIAlertAction(title: "Set Preferences", style: .default) { [weak welcomeAlert] _ in
-                guard let textFields = welcomeAlert?.textFields else { return }
+//                guard let textFields = welcomeAlert?.textFields else { return }
 //
 //                if let nameText = textFields[0].text {
 //                    self.defaults.set(nameText, forKey: "userName")
@@ -153,24 +153,17 @@ class NotifyViewController: UIViewController {
             self.present(welcomeAlert, animated: true, completion: nil)
             self.defaults.set("shown", forKey: "nameInput")
             
-            let notifMananger = PushNotificationManager()
-            
-            db.collection("users_table").getDocuments() {
-                (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        if (document.get("name") as! String) == self.defaults.string(forKey: "userName") {
-                            cont = true
-                            notifMananger.updateFirestorePushTokenIfNeeded()
-                            break
-                        }
-                    }
-                    
-                    if cont == false {
+            let prefViewCont: PreferencesViewController = PreferencesViewController()
                         
-                    }
+            db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
+                "name": defaults.string(forKey: "userName")!,
+                "room": prefViewCont.roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!,
+                "fcmToken": Messaging.messaging().fcmToken!
+            ]) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
                 }
             }
         }
