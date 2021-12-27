@@ -152,20 +152,6 @@ class NotifyViewController: UIViewController {
             welcomeAlert.overrideUserInterfaceStyle = .dark
             self.present(welcomeAlert, animated: true, completion: nil)
             self.defaults.set("shown", forKey: "nameInput")
-            
-            let prefViewCont: PreferencesViewController = PreferencesViewController()
-                        
-            db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
-                "name": defaults.string(forKey: "userName")!,
-                "room": prefViewCont.roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!,
-                "fcmToken": Messaging.messaging().fcmToken!
-            ]) { err in
-                if let err = err {
-                    print("Error writing document: \(err)")
-                } else {
-                    print("Document successfully written!")
-                }
-            }
         }
     }
     

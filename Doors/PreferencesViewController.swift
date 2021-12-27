@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 class PreferencesViewController: UIViewController, UITextFieldDelegate {
         
@@ -13,6 +16,8 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var roomSegment: UISegmentedControl!
     
     let defaults = UserDefaults.standard
+    
+    let db = Firestore.firestore()
 
     
     override func viewDidLoad() {
@@ -25,6 +30,23 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
         if let value = self.defaults.value(forKey: "roomChosen"){
             let selectedIndex = value as! Int
             roomSegment.selectedSegmentIndex = selectedIndex
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isBeingDismissed {
+            db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
+                "name": defaults.string(forKey: "userName")!,
+                "room": roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!,
+                "fcmToken": Messaging.messaging().fcmToken!
+            ]) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
         }
     }
     
