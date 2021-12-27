@@ -15,7 +15,7 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
     
     //OJU
     //error: with remoteMessaging and next func
-    /*let userID: String
+    let userID: String
     init(userID: String) {
         self.userID = userID
         super.init()
@@ -26,13 +26,13 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
             usersRef.setData(["fcmToken": token], merge: true)
         }
     }
-    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        print(remoteMessage.appData)
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingDelegate) {
+        print(remoteMessage.description)
     }
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         updateFirestorePushTokenIfNeeded()
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print(response)
-    }*/
+    }
 }
