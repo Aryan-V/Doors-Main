@@ -23,6 +23,8 @@ class NotifyViewController: UIViewController {
     
     let defaults = UserDefaults.standard
     
+    let db = Firestore.firestore()
+    
     let nf = NumberFormatter()
     
     private let database = Firestore.firestore()
@@ -124,6 +126,8 @@ class NotifyViewController: UIViewController {
     func displayWelcomeName() {
         let nameInput = self.defaults.string(forKey: "nameInput")
         
+        var cont = false
+        
         if (nameInput == nil || nameInput == "") {
             let welcomeAlert = UIAlertController(title: "Welcome to Doors!", message: "After you've set your preferences, swipe down the screen and begin using Doors!", preferredStyle: .alert)
 
@@ -148,6 +152,27 @@ class NotifyViewController: UIViewController {
             welcomeAlert.overrideUserInterfaceStyle = .dark
             self.present(welcomeAlert, animated: true, completion: nil)
             self.defaults.set("shown", forKey: "nameInput")
+            
+            let notifMananger = PushNotificationManager()
+            
+            db.collection("users_table").getDocuments() {
+                (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        if (document.get("name") as! String) == self.defaults.string(forKey: "userName") {
+                            cont = true
+                            notifMananger.updateFirestorePushTokenIfNeeded()
+                            break
+                        }
+                    }
+                    
+                    if cont == false {
+                        
+                    }
+                }
+            }
         }
     }
     
