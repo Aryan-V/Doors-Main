@@ -33,22 +33,12 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if isBeingDismissed {
-            db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
-                "name": defaults.string(forKey: "userName")!,
-                "room": roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!,
-                "fcmToken": Messaging.messaging().fcmToken!
-            ]) { err in
-                if let err = err {
-                    print("Error writing document: \(err)")
-                } else {
-                    print("Document successfully written!")
-                }
-            }
-        }
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        if isBeingDismissed {
+//
+//        }
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         nameField.text = self.defaults.string(forKey: "userName")
@@ -57,10 +47,35 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
     @IBAction func donePressed(_ sender: UITextField) {
         self.defaults.set(nameField.text, forKey: "userName")
         nameField.resignFirstResponder()
+        
+        var roomChoice = defaults.value(forKey: "roomChosen") ?? 1
+        
+        db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
+            "name": defaults.string(forKey: "userName")!,
+            "room": roomSegment.titleForSegment(at: roomChoice as! Int)!,
+            "fcmToken": Messaging.messaging().fcmToken!
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
     }
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         self.defaults.set(sender.selectedSegmentIndex, forKey: "roomChosen")
+        db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
+            "name": defaults.string(forKey: "userName")!,
+            "room": roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!,
+            "fcmToken": Messaging.messaging().fcmToken!
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
     }
     
     
