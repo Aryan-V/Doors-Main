@@ -115,7 +115,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = notification.request.content.userInfo
       // 2
       UIApplication.shared.applicationIconBadgeNumber = 0
-        if let data = userInfo["data"]["user"] as? String {
+        if let data = userInfo["data"] as? String {
             print("SENDERS FCM " + data)
       }
     }
