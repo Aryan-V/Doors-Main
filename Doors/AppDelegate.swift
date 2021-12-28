@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
-        print(notification.request.content.userInfo["data"])
+        print(notification.request.content.userInfo["user"])
 //        process(notification)
         completionHandler([[.banner, .sound]])
     }
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         Messaging.messaging().appDidReceiveMessage(response.notification.request.content.userInfo)
-        print(response.notification.request.content.userInfo["data"])
+        print(response.notification.request.content.userInfo["user"])
         completionHandler()
 //        process(response.notification)
     }
