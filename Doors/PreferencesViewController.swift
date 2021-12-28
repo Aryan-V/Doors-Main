@@ -22,9 +22,6 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let notif = PushNotificationManager()
-        notif.updateFirestorePushTokenIfNeeded()
 
         // Do any additional setup after loading the view.
         

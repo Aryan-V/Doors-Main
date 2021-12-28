@@ -44,8 +44,6 @@ class NotifyViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         DispatchQueue.main.async {
-            let notif = PushNotificationManager()
-            notif.updateFirestorePushTokenIfNeeded()
             self.displayWelcomeName()
             self.durationSlider.value = (Float(self.defaults.string(forKey: "minutesDND") ?? "0")! / 120)
             let minutes = self.defaults.integer(forKey: "minutesDND")
