@@ -44,6 +44,8 @@ class NotifyViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         DispatchQueue.main.async {
+            let notif = PushNotificationManager()
+            notif.updateFirestorePushTokenIfNeeded()
             self.displayWelcomeName()
             self.durationSlider.value = (Float(self.defaults.string(forKey: "minutesDND") ?? "0")! / 120)
             let minutes = self.defaults.integer(forKey: "minutesDND")
@@ -170,7 +172,7 @@ class NotifyViewController: UIViewController {
 //
 //        sender.sendPushNotification(to: "07edd4c7326685895b2956e1ea99bc2480e41f1695a79836bd5585f0a16fbf2d", title: "Nabeel Door", body: "Sent with device token")
         
-        sender.sendPushNotification(to: "cCLv9YA9ekztlMaX2bmbZe:APA91bE1YHnZmN_FCSpepHPEwHkBFvLnXSh6HkB3E78bcxAx3d3WhpJvng6slBF-2t7HZeQlvQQx2CudS_-RBP_JlA2IuKobJAOx5R-RVK20QcIT8i3H6nBv68H7h-7iBWNyRZaobjcT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Nabeel Door.")
+        sender.sendPushNotification(to: "c5SImKK3KU5ol3_Z7dRvul:APA91bGzpddsMl3_i-OSdcbBJ3Ya7KYfe3JH3MY_mC-SXSXXp-cPYwwXsDOoTCGni1U5CushMpgg47U_Z0d_AVW466FJiEfYZkT43Z572Pgg8W84Uy7BzVYKmEYOINRl6expjT0aqUbT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Nabeel Door.")
         
         print(self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
     }
