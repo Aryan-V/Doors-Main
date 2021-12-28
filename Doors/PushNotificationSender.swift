@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseMessaging
 
 //OJU
 class PushNotificationSender {
@@ -15,7 +17,7 @@ class PushNotificationSender {
         let url = NSURL(string: urlString)!
         let paramString: [String : Any] = ["to" : token,
                                            "notification" : ["title" : title, "body" : body],
-                                           "data" : ["user" : "test_id"]
+                                           "data" : ["user" : Messaging.messaging().fcmToken]
         ]
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"
