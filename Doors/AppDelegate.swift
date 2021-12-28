@@ -16,9 +16,6 @@ import UserNotifications*/
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UNUserNotificationCenter.current().delegate = self
@@ -61,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
-        print(notification.request.content.userInfo)
+        print(notification.request.content.userInfo["data"])
 //        process(notification)
         completionHandler([[.banner, .sound]])
     }
@@ -72,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         Messaging.messaging().appDidReceiveMessage(response.notification.request.content.userInfo)
-        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo["data"])
         completionHandler()
 //        process(response.notification)
     }
@@ -110,5 +107,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
 }
-
-
