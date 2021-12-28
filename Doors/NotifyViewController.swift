@@ -271,19 +271,25 @@ class NotifyViewController: UIViewController {
            let alertDict = aps["alert"] as? [String:String] {
             print("body :", alertDict["body"]!)
             
-            let name = alertDict["body"]!.components(separatedBy: " ")[0]
+            let dict = alertDict["body"]!.components(separatedBy: " ")
+            let name = dict[0]
             
             let alert = UIAlertController(title: "Attention", message: alertDict["body"], preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Coming", style: UIAlertAction.Style.destructive, handler: { action in
-                self.sendAlertNotif(comingOrAway: "coming", personDoor: alertDict["body"]!)
-                sender.sendPushNotification(to: senderFcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is coming to get you.")
-            }))
-            alert.addAction(UIAlertAction(title: "Away", style: UIAlertAction.Style.cancel, handler: { action in
+            alert.addAction(UIAlertAction(title: "Away", style: UIAlertAction.Style.destructive, handler: { action in
                 self.sendAlertNotif(comingOrAway: "away", personDoor: alertDict["body"]!)
                 sender.sendPushNotification(to: senderFcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " cannot come get you.")
             }))
+            alert.addAction(UIAlertAction(title: "Coming", style: UIAlertAction.Style.default, handler: { action in
+                self.sendAlertNotif(comingOrAway: "coming", personDoor: alertDict["body"]!)
+                sender.sendPushNotification(to: senderFcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is coming to get you.")
+            }))
             alert.overrideUserInterfaceStyle = .dark
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            
+            print(alertDict["body"]!.components(separatedBy: " ")[dict.count - 1])
+            
+            if alertDict["body"]!.components(separatedBy: " ")[dict.count - 1] != "you." {
+                UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            }
         }
         
         print("Sender FCM: " + (senderFcm as! String))
