@@ -167,8 +167,10 @@ class NotifyViewController: UIViewController {
         save(testMessage)
         
         let sender = PushNotificationSender()
+//
+//        sender.sendPushNotification(to: "07edd4c7326685895b2956e1ea99bc2480e41f1695a79836bd5585f0a16fbf2d", title: "Nabeel Door", body: "Sent with device token")
         
-//        sender.sendPushNotification(to: <#T##String#>, title: "Nabeel Door", body: "Sent from Aryan's iPhone.")
+        sender.sendPushNotification(to: "cCLv9YA9ekztlMaX2bmbZe:APA91bE1YHnZmN_FCSpepHPEwHkBFvLnXSh6HkB3E78bcxAx3d3WhpJvng6slBF-2t7HZeQlvQQx2CudS_-RBP_JlA2IuKobJAOx5R-RVK20QcIT8i3H6nBv68H7h-7iBWNyRZaobjcT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Nabeel Door.")
         
         print(self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
     }
@@ -182,6 +184,10 @@ class NotifyViewController: UIViewController {
         let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the LAR door.")
         
         save(testMessage)
+        
+        let sender = PushNotificationSender()
+        
+        sender.sendPushNotification(to: "cCLv9YA9ekztlMaX2bmbZe:APA91bE1YHnZmN_FCSpepHPEwHkBFvLnXSh6HkB3E78bcxAx3d3WhpJvng6slBF-2t7HZeQlvQQx2CudS_-RBP_JlA2IuKobJAOx5R-RVK20QcIT8i3H6nBv68H7h-7iBWNyRZaobjcT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the LAR Door.")
 
         print(self.defaults.string(forKey: "userName")! + " is at the LAR door.")
     }
@@ -195,6 +201,10 @@ class NotifyViewController: UIViewController {
         let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the LAR elevator.")
         
         save(testMessage)
+        
+        let sender = PushNotificationSender()
+        
+        sender.sendPushNotification(to: "cCLv9YA9ekztlMaX2bmbZe:APA91bE1YHnZmN_FCSpepHPEwHkBFvLnXSh6HkB3E78bcxAx3d3WhpJvng6slBF-2t7HZeQlvQQx2CudS_-RBP_JlA2IuKobJAOx5R-RVK20QcIT8i3H6nBv68H7h-7iBWNyRZaobjcT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the LAR Elevator.")
 
         print(self.defaults.string(forKey: "userName")! + " is at the LAR elevator.")
     }
@@ -208,6 +218,10 @@ class NotifyViewController: UIViewController {
         let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the Subin door.")
         
         save(testMessage)
+        
+        let sender = PushNotificationSender()
+
+        sender.sendPushNotification(to: "cCLv9YA9ekztlMaX2bmbZe:APA91bE1YHnZmN_FCSpepHPEwHkBFvLnXSh6HkB3E78bcxAx3d3WhpJvng6slBF-2t7HZeQlvQQx2CudS_-RBP_JlA2IuKobJAOx5R-RVK20QcIT8i3H6nBv68H7h-7iBWNyRZaobjcT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Subin Door.")
 
         print(self.defaults.string(forKey: "userName")! + " is at the Subin door.")
     }
