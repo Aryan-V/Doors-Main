@@ -58,9 +58,9 @@
                                 <rect key="frame" x="90" y="213" width="275" height="32"/>
                                 <segments>
                                     <segment title="0013"/>
-                                    <segment title="4117"/>
-                                    <segment title="4118"/>
-                                    <segment title="1147"/>
+                                    <segment title="0132"/>
+                                    <segment title="4496"/>
+                                    <segment title="4498"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentChanged:" destination="WEi-D9-JiN" eventType="valueChanged" id="ny1-J7-nuT"/>
