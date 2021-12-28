@@ -53,6 +53,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           }
     }
     
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler:
+        @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
+        print(notification.request.content.userInfo)
+//        process(notification)
+        completionHandler([[.banner, .sound]])
+    }
+    
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        Messaging.messaging().appDidReceiveMessage(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo)
+        completionHandler()
+//        process(response.notification)
+    }
+    
     func getNotificationSettings() {
       UNUserNotificationCenter.current().getNotificationSettings { settings in
         print("Notification settings: \(settings)")
@@ -85,45 +108,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       print("Failed to register: \(error)")
     }
 
-}
-
-//OJU
-//not sure if we need these extensions but they are from raywenderlich
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler:
-        @escaping (UNNotificationPresentationOptions) -> Void
-    ) {
-        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
-        print(notification.request.content.userInfo)
-//        process(notification)
-        completionHandler([[.banner, .sound]])
-    }
-    
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
-        withCompletionHandler completionHandler: @escaping () -> Void
-    ) {
-        Messaging.messaging().appDidReceiveMessage(response.notification.request.content.userInfo)
-        print(response.notification.request.content.userInfo)
-        completionHandler()
-//        process(response.notification)
-    }
-    
-//    private func process(_ notification: UNNotification) {
-//      // 1
-//        let userInfo = notification.request.content.userInfo
-//      // 2
-//      UIApplication.shared.applicationIconBadgeNumber = 0
-//        if let data = userInfo["data"] as? String {
-//            print("SENDERS FCM " + data)
-//      }
-//        print(userInfo)
-//    }
 }
 
 
