@@ -21,9 +21,14 @@ class NotifyViewController: UIViewController {
     @IBOutlet weak var durationSlider: UISlider!
     @IBOutlet weak var sendDNDNotification: UIButton!
     
+        
     let defaults = UserDefaults.standard
-    
+        
     let db = Firestore.firestore()
+    
+    let prefview = PreferencesViewController()
+    
+//    var prefview = storyboard?.instantiateViewController(withIdentifier: "PreferencesViewController") as! PreferencesViewController
     
     let nf = NumberFormatter()
         
@@ -41,7 +46,7 @@ class NotifyViewController: UIViewController {
         super.viewDidLoad()
 //        listenToMessages()
         Auth.auth().signInAnonymously()
-
+        
         // Do any additional setup after loading the view.
         DispatchQueue.main.async {
             self.displayWelcomeName()
@@ -70,6 +75,8 @@ class NotifyViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        var prefview = self.storyboard?.instantiateViewController(withIdentifier: "PreferencesViewController") as! PreferencesViewController
 //        messageClient.delegate = self
 //        messageClient.setupNetworkCommunication()
 //        messageClient.joinChat()
@@ -213,8 +220,8 @@ class NotifyViewController: UIViewController {
     
     @IBAction func sliderChanged(_ sender: Any) {
         
-        let feedbackGenerator = UISelectionFeedbackGenerator()
-        feedbackGenerator.selectionChanged()
+//        let feedbackGenerator = UISelectionFeedbackGenerator()
+//        feedbackGenerator.selectionChanged()
                 
         // max value is 2 hours
         let minutes = 120 * durationSlider.value
@@ -228,12 +235,83 @@ class NotifyViewController: UIViewController {
     }
     
     @IBAction func sendDNDNotificationPressed(_ sender: Any) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let prefview = storyboard.instantiateViewController(withIdentifier: "PreferencesViewController") as! PreferencesViewController
+        
+        var timer = Timer()
+        
+        let sender = PushNotificationSender()
+                
         let feedbackGenerator = UIImpactFeedbackGenerator()
         feedbackGenerator.impactOccurred()
         if sendDNDNotification.titleLabel!.text == "Send Do Not Disturb to Roommates" {
             sendDNDNotification.setTitle("Cancel", for: .normal)
             sendDNDNotification.tintColor = UIColor.systemRed
+            let timeNeededMins = (durationSlider.value * 120)
+            let timeNeededSecs = timeNeededMins*60
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(timeNeededSecs), target: self, selector: #selector(sendCompletionNotif), userInfo: nil, repeats: false)
+            
+            db.collection("users_table").getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        if (document.get("room") as! String) == prefview.getRoomNum() && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+                            if self.nf.string(from: NSNumber(value: timeNeededMins))! == "1" {
+                                sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " needs the room for " + self.nf.string(from: NSNumber(value: timeNeededMins))! + " minute.")
+                            } else {
+                                sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " needs the room for " + self.nf.string(from: NSNumber(value: timeNeededMins))! + " minutes.")
+                            }
+                            print("sent dnd notif")
+                        }
+                        
+                    }
+                }
+            }
+            
         } else if sendDNDNotification.titleLabel!.text == "Cancel" {
+            sendDNDNotification.setTitle("Send Do Not Disturb to Roommates", for: .normal)
+            sendDNDNotification.tintColor = UIColor.systemBlue
+            db.collection("users_table").getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        if (document.get("room") as! String) == prefview.getRoomNum() && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+                            sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is done with the room.")
+                            print("sent cancel notif")
+                        }
+                        
+                    }
+                }
+            }
+            timer.invalidate()
+        }
+        
+        self.defaults.set(sendDNDNotification.titleLabel!.text, forKey: "notifButton")
+    }
+    
+    @objc func sendCompletionNotif() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let prefview = storyboard.instantiateViewController(withIdentifier: "PreferencesViewController") as! PreferencesViewController
+        let sender = PushNotificationSender()
+                
+        db.collection("users_table").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    if (document.get("room") as! String) == prefview.getRoomNum() && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+                        sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is done with the room.")
+                        print("sent timer completion notif")
+                    }
+                    
+                }
+            }
+        }
+        
+        if sendDNDNotification.titleLabel!.text == "Cancel" {
             sendDNDNotification.setTitle("Send Do Not Disturb to Roommates", for: .normal)
             sendDNDNotification.tintColor = UIColor.systemBlue
         }
@@ -287,7 +365,8 @@ class NotifyViewController: UIViewController {
             
             print(alertDict["body"]!.components(separatedBy: " ")[dict.count - 1])
             
-            if alertDict["body"]!.components(separatedBy: " ")[dict.count - 1] != "you." {
+            // only show this alert if it says someone is at door/elevator
+            if alertDict["body"]!.components(separatedBy: " ")[dict.count - 1] == "or." {
                 UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
             }
         }
@@ -297,10 +376,12 @@ class NotifyViewController: UIViewController {
     }
     
     private func sendAlertNotif(senderFcm: String, comingOrAway: String, personDoor: String) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let prefview = storyboard.instantiateViewController(withIdentifier: "PreferencesViewController") as! PreferencesViewController
         let sender = PushNotificationSender()
         
         let name = personDoor.components(separatedBy: " ")[0]
-                
+                        
         db.collection("users_table").getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
@@ -312,7 +393,7 @@ class NotifyViewController: UIViewController {
 //                        }
                         
                        
-                        if (document.get("room") as! String) == self.defaults.string(forKey: "roomChosen") && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) && (document.get("fcmToken") as! String) != senderFcm {
+                        if (document.get("room") as! String) == prefview.getRoomNum() && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) && (document.get("fcmToken") as! String) != senderFcm {
                                 sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is getting " + name + ".")
                             }
                         }
@@ -324,7 +405,7 @@ class NotifyViewController: UIViewController {
     //                        }
                             
                            
-                            if (document.get("room") as! String) == self.defaults.string(forKey: "roomChosen") && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) && (document.get("fcmToken") as! String) != senderFcm {
+                            if (document.get("room") as! String) == prefview.getRoomNum() && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) && (document.get("fcmToken") as! String) != senderFcm {
                                     sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " cannot get " + name + ".")
                                 }
                             }
@@ -366,8 +447,8 @@ struct Message {
     
     init?(document: QueryDocumentSnapshot) {
       let data = document.data()
-        self.user = data["senderName"] as! String
-        self.content = data["content"] as! String
+        self.user = (data["senderName"] as! String)
+        self.content = (data["content"] as! String)
     }
 }
 

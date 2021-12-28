@@ -41,6 +41,7 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
 //    }
     
     override func viewWillAppear(_ animated: Bool) {
+        _ = self.view
         nameField.text = self.defaults.string(forKey: "userName")
     }
 
@@ -53,7 +54,7 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
         db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
             "name": defaults.string(forKey: "userName")!,
             "room": roomSegment.titleForSegment(at: roomChoice as! Int)!,
-            "fcmToken": Messaging.messaging().fcmToken
+            "fcmToken": Messaging.messaging().fcmToken ?? 0
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -65,10 +66,12 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         self.defaults.set(sender.selectedSegmentIndex, forKey: "roomChosen")
-        db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
+        let roomChoice = self.defaults.value(forKey: "roomChosen")
+        self.defaults.set(roomSegment.titleForSegment(at: roomChoice as! Int)!, forKey: "roomNumber")
+        db.collection("users_table").document(defaults.string(forKey: "userName") ?? "Temp").setData([
             "name": defaults.string(forKey: "userName")!,
             "room": roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!,
-            "fcmToken": Messaging.messaging().fcmToken
+            "fcmToken": Messaging.messaging().fcmToken ?? 0
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -76,6 +79,11 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
                 print("Document successfully written!")
             }
         }
+    }
+    
+    func getRoomNum() -> String{
+//        return self.roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!
+        return self.defaults.string(forKey: "roomNumber")!
     }
     
     
