@@ -27,19 +27,19 @@ class NotifyViewController: UIViewController {
     
     let nf = NumberFormatter()
         
-    private let database = Firestore.firestore()
-    private var reference: CollectionReference?
-    private var messageListener: ListenerRegistration?
+//    private let database = Firestore.firestore()
+//    private var reference: CollectionReference?
+//    private var messageListener: ListenerRegistration?
     
 //    let messageClient = MessageClient()
     
-    deinit {
-      messageListener?.remove()
-    }
+//    deinit {
+//      messageListener?.remove()
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        listenToMessages()
+//        listenToMessages()
         Auth.auth().signInAnonymously()
 
         // Do any additional setup after loading the view.
@@ -80,47 +80,47 @@ class NotifyViewController: UIViewController {
         self.displayWelcomeName()
     }
     
-    private func listenToMessages() {
-      reference = database.collection("channels/doors/thread")
-        messageListener = reference?
-          .addSnapshotListener { [weak self] querySnapshot, error in
-            guard let self = self else { return }
-            guard let snapshot = querySnapshot else {
-              print("""
-                Error listening for channel updates: \
-                \(error?.localizedDescription ?? "No error")
-                """)
-              return
-            }
-
-            snapshot.documentChanges.forEach { change in
-              self.handleDocumentChange(change)
-            }
-          }
-    }
+//    private func listenToMessages() {
+//      reference = database.collection("channels/doors/thread")
+//        messageListener = reference?
+//          .addSnapshotListener { [weak self] querySnapshot, error in
+//            guard let self = self else { return }
+//            guard let snapshot = querySnapshot else {
+//              print("""
+//                Error listening for channel updates: \
+//                \(error?.localizedDescription ?? "No error")
+//                """)
+//              return
+//            }
+//
+//            snapshot.documentChanges.forEach { change in
+//              self.handleDocumentChange(change)
+//            }
+//          }
+//    }
     
-    private func handleDocumentChange(_ change: DocumentChange) {
-      guard let message = Message(document: change.document) else {
-        return
-      }
-
-      switch change.type {
-      case .added:
-          sendNotificationDoor(message: message.content)
-      default:
-        break
-      }
-    }
-    
-    private func save(_ message: Message) {
-      reference?.addDocument(data: message.representation) { [weak self] error in
-//        guard let self = self else { return }
-        if let error = error {
-          print("Error sending message: \(error.localizedDescription)")
-          return
-        }
-      }
-    }
+//    private func handleDocumentChange(_ change: DocumentChange) {
+//      guard let message = Message(document: change.document) else {
+//        return
+//      }
+//
+//      switch change.type {
+//      case .added:
+//          sendNotificationDoor(message: message.content)
+//      default:
+//        break
+//      }
+//    }
+//
+//    private func save(_ message: Message) {
+//      reference?.addDocument(data: message.representation) { [weak self] error in
+////        guard let self = self else { return }
+//        if let error = error {
+//          print("Error sending message: \(error.localizedDescription)")
+//          return
+//        }
+//      }
+//    }
 
     
     func displayWelcomeName() {
@@ -162,29 +162,13 @@ class NotifyViewController: UIViewController {
         
 //        messageClient.send(message: self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
         
-        let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
+//        let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
         
-        save(testMessage)
+//        save(testMessage)
 //
 //        sender.sendPushNotification(to: "07edd4c7326685895b2956e1ea99bc2480e41f1695a79836bd5585f0a16fbf2d", title: "Nabeel Door", body: "Sent with device token")
         
-        let sender = PushNotificationSender()
-        
-        var fcm = ""
-        
-        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
-        
-        usersRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                fcm = document.get("fcmToken") as! String
-                sender.sendPushNotification(to: fcm, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the Nabeel Door.")
-                print((document.get("name") as! String) + "'s FCM Token: " + (fcm))
-            } else {
-                print("Document does not exist")
-            }
-        }
-        
-        print(self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
+        sendNotificationDoor(door: "0013", doorName: "Nabeel Door.")
     }
     
     @IBAction func larDoorPressed(_ sender: Any) {
@@ -193,27 +177,11 @@ class NotifyViewController: UIViewController {
         
 //        messageClient.send(message: self.defaults.string(forKey: "userName")! + " is at the LAR door.")
         
-        let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the LAR door.")
+//        let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the LAR door.")
+//
+//        save(testMessage)
         
-        save(testMessage)
-        
-        let sender = PushNotificationSender()
-        
-        var fcm = ""
-        
-        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
-        
-        usersRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                fcm = document.get("fcmToken") as! String
-                sender.sendPushNotification(to: fcm, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the LAR Door.")
-                print((document.get("name") as! String) + "'s FCM Token: " + (fcm))
-            } else {
-                print("Document does not exist")
-            }
-        }
-
-        print(self.defaults.string(forKey: "userName")! + " is at the LAR door.")
+        sendNotificationDoor(door: "0013", doorName: "LAR Door.")
     }
     
     @IBAction func larElevatorPressed(_ sender: Any) {
@@ -222,27 +190,12 @@ class NotifyViewController: UIViewController {
         
 //        messageClient.send(message: self.defaults.string(forKey: "userName")! + " is at the LAR elevator.")
         
-        let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the LAR elevator.")
+//        let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the LAR elevator.")
+//
+//        save(testMessage)
         
-        save(testMessage)
-        
-        let sender = PushNotificationSender()
-        
-        var fcm = ""
-        
-        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
-        
-        usersRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                fcm = document.get("fcmToken") as! String
-                sender.sendPushNotification(to: fcm, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the LAR Elevator.")
-                print((document.get("name") as! String) + "'s FCM Token: " + (fcm))
-            } else {
-                print("Document does not exist")
-            }
-        }
-
-        print(self.defaults.string(forKey: "userName")! + " is at the LAR elevator.")
+        sendNotificationDoor(door: "4498", doorName: "LAR Elevator.")
+        sendNotificationDoor(door: "4496", doorName: "LAR Elevator.")
     }
     
     @IBAction func subinDoorPressed(_ sender: Any) {
@@ -251,27 +204,11 @@ class NotifyViewController: UIViewController {
         
 //        messageClient.send(message: self.defaults.string(forKey: "userName")! + " is at the Subin door.")
         
-        let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the Subin door.")
-        
-        save(testMessage)
-        
-        let sender = PushNotificationSender()
-        
-        var fcm = ""
-        
-        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
-        
-        usersRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                fcm = document.get("fcmToken") as! String
-                sender.sendPushNotification(to: fcm, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the Subin Door.")
-                print((document.get("name") as! String) + "'s FCM Token: " + (fcm))
-            } else {
-                print("Document does not exist")
-            }
-        }
-
-        print(self.defaults.string(forKey: "userName")! + " is at the Subin door.")
+//        let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the Subin door.")
+//
+//        save(testMessage)
+//
+        sendNotificationDoor(door: "1132", doorName: "Subin Door.")
     }
     
     @IBAction func sliderChanged(_ sender: Any) {
@@ -304,12 +241,23 @@ class NotifyViewController: UIViewController {
         self.defaults.set(sendDNDNotification.titleLabel!.text, forKey: "notifButton")
     }
     
-    func sendNotificationDoor(message: String) {
-        print("RECEIVED: " + message)
-        //OJU
-        //tryna get token from firestore usertable now
-        /*let sender = PushNotificationSender()
-        sender.sendPushNotification(to: "token", title: "Doors", body: message)*/
+    func sendNotificationDoor(door: String, doorName: String) {
+        let sender = PushNotificationSender()
+                
+        db.collection("users_table").getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+//                        if (document.get("room") as! String) == door && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+//                            sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the " + doorName)
+//                        }
+                        if (document.get("room") as! String) == door {
+                            sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the " + doorName)
+                        }
+                    }
+                }
+            }
     }
     
     

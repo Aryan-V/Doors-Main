@@ -58,8 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
-        print(notification.request.content.userInfo["user"])
+//        print(notification.request.content.userInfo["user"]!)
 //        process(notification)
+        
+        process(notification)
         completionHandler([[.banner, .sound]])
     }
     
@@ -69,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         Messaging.messaging().appDidReceiveMessage(response.notification.request.content.userInfo)
-        print(response.notification.request.content.userInfo["user"])
+        process(response.notification)
         completionHandler()
 //        process(response.notification)
     }
@@ -104,6 +106,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
       didFailToRegisterForRemoteNotificationsWithError error: Error
     ) {
       print("Failed to register: \(error)")
+    }
+    
+    private func process(_ notification: UNNotification) {
+        let userInfo = notification.request.content.userInfo
+        
+        let senderFcm = userInfo["user"]
+        
+        print("Sender FCM: " + (senderFcm as! String))
     }
 
 }
