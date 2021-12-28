@@ -187,7 +187,19 @@ class NotifyViewController: UIViewController {
         
         let sender = PushNotificationSender()
         
-        sender.sendPushNotification(to: "cCLv9YA9ekztlMaX2bmbZe:APA91bE1YHnZmN_FCSpepHPEwHkBFvLnXSh6HkB3E78bcxAx3d3WhpJvng6slBF-2t7HZeQlvQQx2CudS_-RBP_JlA2IuKobJAOx5R-RVK20QcIT8i3H6nBv68H7h-7iBWNyRZaobjcT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the LAR Door.")
+        var fcm = ""
+        
+        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
+        
+        usersRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                fcm = document.get("fcmToken") as! String
+                sender.sendPushNotification(to: fcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the LAR Door.")
+                print("Document data: " + (fcm))
+            } else {
+                print("Document does not exist")
+            }
+        }
 
         print(self.defaults.string(forKey: "userName")! + " is at the LAR door.")
     }
