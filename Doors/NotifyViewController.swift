@@ -26,7 +26,7 @@ class NotifyViewController: UIViewController {
     let db = Firestore.firestore()
     
     let nf = NumberFormatter()
-    
+        
     private let database = Firestore.firestore()
     private var reference: CollectionReference?
     private var messageListener: ListenerRegistration?

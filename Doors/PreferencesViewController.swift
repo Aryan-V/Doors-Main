@@ -48,12 +48,12 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
         self.defaults.set(nameField.text, forKey: "userName")
         nameField.resignFirstResponder()
         
-        var roomChoice = defaults.value(forKey: "roomChosen") ?? 1
+        let roomChoice = defaults.value(forKey: "roomChosen") ?? 1
         
         db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
             "name": defaults.string(forKey: "userName")!,
             "room": roomSegment.titleForSegment(at: roomChoice as! Int)!,
-            "fcmToken": Messaging.messaging().fcmToken!
+            "fcmToken": Messaging.messaging().apnsToken!
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -68,7 +68,7 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
         db.collection("users_table").document(defaults.string(forKey: "userName")!).setData([
             "name": defaults.string(forKey: "userName")!,
             "room": roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!,
-            "fcmToken": Messaging.messaging().fcmToken!
+            "fcmToken": Messaging.messaging().apnsToken!
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
