@@ -189,7 +189,7 @@ class NotifyViewController: UIViewController {
         
         var fcm = ""
         
-        let usersRef = Firestore.firestore().collection("users_table").document("Aryan")
+        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
         
         usersRef.getDocument { (document, error) in
             if let document = document, document.exists {
