@@ -114,7 +114,7 @@ class NotifyViewController: UIViewController {
     
     private func save(_ message: Message) {
       reference?.addDocument(data: message.representation) { [weak self] error in
-        guard let self = self else { return }
+//        guard let self = self else { return }
         if let error = error {
           print("Error sending message: \(error.localizedDescription)")
           return
@@ -189,13 +189,13 @@ class NotifyViewController: UIViewController {
         
         var fcm = ""
         
-        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
+        let usersRef = Firestore.firestore().collection("users_table").document("Aryan")
         
         usersRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 fcm = document.get("fcmToken") as! String
-                sender.sendPushNotification(to: fcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the LAR Door.")
-                print("Document data: " + (fcm))
+                sender.sendPushNotification(to: fcm, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the LAR Door.")
+                print((document.get("name") as! String) + "'s FCM Token: " + (fcm))
             } else {
                 print("Document does not exist")
             }

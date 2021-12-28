@@ -89,32 +89,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //OJU
 //not sure if we need these extensions but they are from raywenderlich
-/*extension AppDelegate: MessagingDelegate {
-  func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-    let tokenDict = ["token": fcmToken ?? ""]
-    NotificationCenter.default.post(
-      name: Notification.Name("FCMToken"),
-      object: nil,
-      userInfo: tokenDict)
-  }
-}
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-  func userNotificationCenter(
-    _ center: UNUserNotificationCenter,
-    willPresent notification: UNNotification,
-    withCompletionHandler completionHandler:
-    @escaping (UNNotificationPresentationOptions) -> Void
-  ) {
-    completionHandler([[.banner, .sound]])
-  }
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler:
+        @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        process(notification)
+        completionHandler([[.banner, .sound]])
+    }
+    
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        completionHandler()
+        process(response.notification)
+    }
+    
+    private func process(_ notification: UNNotification) {
+      // 1
+        let userInfo = notification.request.content.userInfo
+      // 2
+      UIApplication.shared.applicationIconBadgeNumber = 0
+        if let data = userInfo["data"] as? String {
+            print("SENDERS FCM " + data)
+      }
+    }
+}
 
-  func userNotificationCenter(
-    _ center: UNUserNotificationCenter,
-    didReceive response: UNNotificationResponse,
-    withCompletionHandler completionHandler: @escaping () -> Void
-  ) {
-    completionHandler()
-  }
- }
-}*/
+
