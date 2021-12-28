@@ -170,7 +170,7 @@ class NotifyViewController: UIViewController {
 //
 //        sender.sendPushNotification(to: "07edd4c7326685895b2956e1ea99bc2480e41f1695a79836bd5585f0a16fbf2d", title: "Nabeel Door", body: "Sent with device token")
         
-        sender.sendPushNotification(to: "c5SImKK3KU5ol3_Z7dRvul:APA91bGzpddsMl3_i-OSdcbBJ3Ya7KYfe3JH3MY_mC-SXSXXp-cPYwwXsDOoTCGni1U5CushMpgg47U_Z0d_AVW466FJiEfYZkT43Z572Pgg8W84Uy7BzVYKmEYOINRl6expjT0aqUbT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Nabeel Door.")
+        sender.sendPushNotification(to: "cYVndR8Pg0Xgv48RyD9Fyk:APA91bG9xXPY7sP6bXHSF1DsNswSsaunoUA9BXgBjcz6az4wMdYhtRUE5Uqh8anfL55D8IwXZYRjUgtROk6L6rWkQPMyRsLw_O4b1tVEwQD14dJv_U0ckfwIzBChcZOlGO3T3bb_VJx5", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Nabeel Door.")
         
         print(self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
     }
@@ -216,7 +216,7 @@ class NotifyViewController: UIViewController {
         
         let sender = PushNotificationSender()
         
-        sender.sendPushNotification(to: "cCLv9YA9ekztlMaX2bmbZe:APA91bE1YHnZmN_FCSpepHPEwHkBFvLnXSh6HkB3E78bcxAx3d3WhpJvng6slBF-2t7HZeQlvQQx2CudS_-RBP_JlA2IuKobJAOx5R-RVK20QcIT8i3H6nBv68H7h-7iBWNyRZaobjcT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the LAR Elevator.")
+        sender.sendPushNotification(to: "cYVndR8Pg0Xgv48RyD9Fyk:APA91bG9xXPY7sP6bXHSF1DsNswSsaunoUA9BXgBjcz6az4wMdYhtRUE5Uqh8anfL55D8IwXZYRjUgtROk6L6rWkQPMyRsLw_O4b1tVEwQD14dJv_U0ckfwIzBChcZOlGO3T3bb_VJx5", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the LAR Elevator.")
 
         print(self.defaults.string(forKey: "userName")! + " is at the LAR elevator.")
     }
@@ -233,7 +233,7 @@ class NotifyViewController: UIViewController {
         
         let sender = PushNotificationSender()
 
-        sender.sendPushNotification(to: "cCLv9YA9ekztlMaX2bmbZe:APA91bE1YHnZmN_FCSpepHPEwHkBFvLnXSh6HkB3E78bcxAx3d3WhpJvng6slBF-2t7HZeQlvQQx2CudS_-RBP_JlA2IuKobJAOx5R-RVK20QcIT8i3H6nBv68H7h-7iBWNyRZaobjcT", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Subin Door.")
+        sender.sendPushNotification(to: "cYVndR8Pg0Xgv48RyD9Fyk:APA91bG9xXPY7sP6bXHSF1DsNswSsaunoUA9BXgBjcz6az4wMdYhtRUE5Uqh8anfL55D8IwXZYRjUgtROk6L6rWkQPMyRsLw_O4b1tVEwQD14dJv_U0ckfwIzBChcZOlGO3T3bb_VJx5", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Subin Door.")
 
         print(self.defaults.string(forKey: "userName")! + " is at the Subin door.")
     }
