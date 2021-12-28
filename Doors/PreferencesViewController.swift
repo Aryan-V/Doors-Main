@@ -33,16 +33,13 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        if isBeingDismissed {
-//
-//        }
-//    }
-    
     override func viewWillAppear(_ animated: Bool) {
         _ = self.view
         nameField.text = self.defaults.string(forKey: "userName")
+        
+        if self.defaults.string(forKey: "roomNumber") == nil {
+            self.defaults.set("0013", forKey: "roomNumber")
+        }
     }
 
     @IBAction func donePressed(_ sender: UITextField) {
@@ -82,19 +79,6 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getRoomNum() -> String{
-//        return self.roomSegment.titleForSegment(at: defaults.value(forKey: "roomChosen") as! Int)!
         return self.defaults.string(forKey: "roomNumber")!
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

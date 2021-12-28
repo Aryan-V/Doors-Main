@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MessageClientDelegate: class {
+protocol MessageClientDelegate: AnyObject {
   func received(message: String)
 }
 
@@ -52,7 +52,7 @@ class MessageClient: NSObject {
       //2
         self.username = self.defaults.string(forKey: "userName") ?? ""
 
-        _ = data.withUnsafeBytes {
+        data.withUnsafeBytes {
         guard let pointer = $0.baseAddress?.assumingMemoryBound(to: UInt8.self) else {
           print("Error connecting")
           return
@@ -65,7 +65,7 @@ class MessageClient: NSObject {
     func send(message: String) {
       let data = "msg:\(message)".data(using: .utf8)!
 
-      _ = data.withUnsafeBytes {
+        data.withUnsafeBytes {
         guard let pointer = $0.baseAddress?.assumingMemoryBound(to: UInt8.self) else {
           print("Error connecting")
           return

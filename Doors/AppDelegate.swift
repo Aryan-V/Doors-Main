@@ -16,9 +16,7 @@ import UserNotifications*/
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-    
-//    let db = Firestore.firestore()
-    
+        
     let defaults = UserDefaults.standard
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -26,8 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().delegate = self
         registerForPushNotifications()
         FirebaseApp.configure()
-        //OJU
-        //Messaging.messaging().delegate = self
         return true
     }
 
@@ -63,9 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
-//        print(notification.request.content.userInfo["user"]!)
-//        process(notification)
-        
         let notif = NotifyViewController()
         
         notif.process(notification)
@@ -83,7 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         notif.process(response.notification)
         completionHandler()
-//        process(response.notification)
     }
     
     func getNotificationSettings() {
@@ -106,9 +98,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
       print("Device Token: \(token)")
         
     Messaging.messaging().apnsToken = deviceToken
-      //OJU
-      /*let pushManager = PushNotificationManager(userID: "currently_logged_in_user_id")
-      pushManager.updateFirestorePushTokenIfNeeded()*/
     }
     
     func application(
