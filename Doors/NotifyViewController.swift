@@ -276,11 +276,11 @@ class NotifyViewController: UIViewController {
             
             let alert = UIAlertController(title: "Attention", message: alertDict["body"], preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Away", style: UIAlertAction.Style.destructive, handler: { action in
-                self.sendAlertNotif(comingOrAway: "away", personDoor: alertDict["body"]!)
+                self.sendAlertNotif(senderFcm: senderFcm as! String, comingOrAway: "away", personDoor: alertDict["body"]!)
                 sender.sendPushNotification(to: senderFcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " cannot come get you.")
             }))
             alert.addAction(UIAlertAction(title: "Coming", style: UIAlertAction.Style.default, handler: { action in
-                self.sendAlertNotif(comingOrAway: "coming", personDoor: alertDict["body"]!)
+                self.sendAlertNotif(senderFcm: senderFcm as! String, comingOrAway: "coming", personDoor: alertDict["body"]!)
                 sender.sendPushNotification(to: senderFcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is coming to get you.")
             }))
             alert.overrideUserInterfaceStyle = .dark
@@ -296,7 +296,7 @@ class NotifyViewController: UIViewController {
         
     }
     
-    private func sendAlertNotif(comingOrAway: String, personDoor: String) {
+    private func sendAlertNotif(senderFcm: String, comingOrAway: String, personDoor: String) {
         let sender = PushNotificationSender()
         
         let name = personDoor.components(separatedBy: " ")[0]
@@ -312,7 +312,7 @@ class NotifyViewController: UIViewController {
 //                        }
                         
                        
-                        if (document.get("room") as! String) == self.defaults.string(forKey: "roomChosen") && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+                        if (document.get("room") as! String) == self.defaults.string(forKey: "roomChosen") && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) && (document.get("fcmToken") as! String) != senderFcm {
                                 sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is getting " + name + ".")
                             }
                         }
@@ -324,7 +324,7 @@ class NotifyViewController: UIViewController {
     //                        }
                             
                            
-                            if (document.get("room") as! String) == self.defaults.string(forKey: "roomChosen") && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+                            if (document.get("room") as! String) == self.defaults.string(forKey: "roomChosen") && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) && (document.get("fcmToken") as! String) != senderFcm {
                                     sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " cannot get " + name + ".")
                                 }
                             }
