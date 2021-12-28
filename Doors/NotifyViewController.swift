@@ -366,7 +366,7 @@ class NotifyViewController: UIViewController {
             print(alertDict["body"]!.components(separatedBy: " ")[dict.count - 1])
             
             // only show this alert if it says someone is at door/elevator
-            if alertDict["body"]!.components(separatedBy: " ")[dict.count - 1] == "or." {
+            if alertDict["body"]!.components(separatedBy: " ")[dict.count - 1].contains("or.") {
                 UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
             }
         }
