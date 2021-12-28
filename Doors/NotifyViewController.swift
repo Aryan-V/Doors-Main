@@ -249,12 +249,79 @@ class NotifyViewController: UIViewController {
                     print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapshot!.documents {
+                        if (document.get("room") as! String) == door && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+                            sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the " + doorName)
+                        }
+//                        if (document.get("room") as! String) == door {
+//                            sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the " + doorName)
+//                        }
+                    }
+                }
+            }
+    }
+    
+    func process(_ notification: UNNotification) {
+        let userInfo = notification.request.content.userInfo
+        
+        let senderFcm = userInfo["user"]
+        
+        let sender = PushNotificationSender()
+        
+        if let aps = userInfo["aps"] as? [String:Any],
+           let alertDict = aps["alert"] as? [String:String] {
+            print("body :", alertDict["body"]!)
+            
+            let name = alertDict["body"]!.components(separatedBy: " ")[0]
+            
+            let alert = UIAlertController(title: "Attention", message: alertDict["body"], preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Coming", style: UIAlertAction.Style.destructive, handler: { action in
+                self.sendAlertNotif(comingOrAway: "coming", personDoor: alertDict["body"]!)
+                sender.sendPushNotification(to: senderFcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is coming to get you.")
+            }))
+            alert.addAction(UIAlertAction(title: "Away", style: UIAlertAction.Style.cancel, handler: { action in
+                self.sendAlertNotif(comingOrAway: "away", personDoor: alertDict["body"]!)
+                sender.sendPushNotification(to: senderFcm as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " cannot come get you.")
+            }))
+            alert.overrideUserInterfaceStyle = .dark
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
+        
+        print("Sender FCM: " + (senderFcm as! String))
+        
+    }
+    
+    private func sendAlertNotif(comingOrAway: String, personDoor: String) {
+        let sender = PushNotificationSender()
+        
+        let name = personDoor.components(separatedBy: " ")[0]
+                
+        db.collection("users_table").getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    if comingOrAway == "coming" {
+                    for document in querySnapshot!.documents {
 //                        if (document.get("room") as! String) == door && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
 //                            sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the " + doorName)
 //                        }
-                        if (document.get("room") as! String) == door {
-                            sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the " + doorName)
+                        
+                       
+                        if (document.get("room") as! String) == self.defaults.string(forKey: "roomChosen") && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+                                sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is getting " + name + ".")
+                            }
                         }
+                        
+                    } else if comingOrAway == "away" {
+                        for document in querySnapshot!.documents {
+    //                        if (document.get("room") as! String) == door && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+    //                            sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the " + doorName)
+    //                        }
+                            
+                           
+                            if (document.get("room") as! String) == self.defaults.string(forKey: "roomChosen") && ((document.get("name") as! String) != self.defaults.string(forKey: "userName")) {
+                                    sender.sendPushNotification(to: document.get("fcmToken") as! String, title: "Doors", body: self.defaults.string(forKey: "userName")! + " cannot get " + name + ".")
+                                }
+                            }
                     }
                 }
             }

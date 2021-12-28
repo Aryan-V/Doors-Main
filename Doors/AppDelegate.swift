@@ -16,6 +16,11 @@ import UserNotifications*/
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    
+//    let db = Firestore.firestore()
+    
+    let defaults = UserDefaults.standard
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UNUserNotificationCenter.current().delegate = self
@@ -61,7 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        print(notification.request.content.userInfo["user"]!)
 //        process(notification)
         
-        process(notification)
+        let notif = NotifyViewController()
+        
+        notif.process(notification)
         completionHandler([[.banner, .sound]])
     }
     
@@ -71,7 +78,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         Messaging.messaging().appDidReceiveMessage(response.notification.request.content.userInfo)
-        process(response.notification)
+        
+        let notif = NotifyViewController()
+
+        notif.process(response.notification)
         completionHandler()
 //        process(response.notification)
     }
@@ -106,14 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
       didFailToRegisterForRemoteNotificationsWithError error: Error
     ) {
       print("Failed to register: \(error)")
-    }
-    
-    private func process(_ notification: UNNotification) {
-        let userInfo = notification.request.content.userInfo
-        
-        let senderFcm = userInfo["user"]
-        
-        print("Sender FCM: " + (senderFcm as! String))
     }
 
 }
