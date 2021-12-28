@@ -165,12 +165,24 @@ class NotifyViewController: UIViewController {
         let testMessage = Message(user: defaults.string(forKey: "userName")!, content: self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
         
         save(testMessage)
-        
-        let sender = PushNotificationSender()
 //
 //        sender.sendPushNotification(to: "07edd4c7326685895b2956e1ea99bc2480e41f1695a79836bd5585f0a16fbf2d", title: "Nabeel Door", body: "Sent with device token")
         
-        sender.sendPushNotification(to: "cYVndR8Pg0Xgv48RyD9Fyk:APA91bG9xXPY7sP6bXHSF1DsNswSsaunoUA9BXgBjcz6az4wMdYhtRUE5Uqh8anfL55D8IwXZYRjUgtROk6L6rWkQPMyRsLw_O4b1tVEwQD14dJv_U0ckfwIzBChcZOlGO3T3bb_VJx5", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Nabeel Door.")
+        let sender = PushNotificationSender()
+        
+        var fcm = ""
+        
+        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
+        
+        usersRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                fcm = document.get("fcmToken") as! String
+                sender.sendPushNotification(to: fcm, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the Nabeel Door.")
+                print((document.get("name") as! String) + "'s FCM Token: " + (fcm))
+            } else {
+                print("Document does not exist")
+            }
+        }
         
         print(self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
     }
@@ -216,7 +228,19 @@ class NotifyViewController: UIViewController {
         
         let sender = PushNotificationSender()
         
-        sender.sendPushNotification(to: "cYVndR8Pg0Xgv48RyD9Fyk:APA91bG9xXPY7sP6bXHSF1DsNswSsaunoUA9BXgBjcz6az4wMdYhtRUE5Uqh8anfL55D8IwXZYRjUgtROk6L6rWkQPMyRsLw_O4b1tVEwQD14dJv_U0ckfwIzBChcZOlGO3T3bb_VJx5", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the LAR Elevator.")
+        var fcm = ""
+        
+        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
+        
+        usersRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                fcm = document.get("fcmToken") as! String
+                sender.sendPushNotification(to: fcm, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the LAR Elevator.")
+                print((document.get("name") as! String) + "'s FCM Token: " + (fcm))
+            } else {
+                print("Document does not exist")
+            }
+        }
 
         print(self.defaults.string(forKey: "userName")! + " is at the LAR elevator.")
     }
@@ -232,8 +256,20 @@ class NotifyViewController: UIViewController {
         save(testMessage)
         
         let sender = PushNotificationSender()
-
-        sender.sendPushNotification(to: "cYVndR8Pg0Xgv48RyD9Fyk:APA91bG9xXPY7sP6bXHSF1DsNswSsaunoUA9BXgBjcz6az4wMdYhtRUE5Uqh8anfL55D8IwXZYRjUgtROk6L6rWkQPMyRsLw_O4b1tVEwQD14dJv_U0ckfwIzBChcZOlGO3T3bb_VJx5", title: "Doors", body: defaults.string(forKey: "userName")! + " is at the Subin Door.")
+        
+        var fcm = ""
+        
+        let usersRef = Firestore.firestore().collection("users_table").document("Oju")
+        
+        usersRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                fcm = document.get("fcmToken") as! String
+                sender.sendPushNotification(to: fcm, title: "Doors", body: self.defaults.string(forKey: "userName")! + " is at the Subin Door.")
+                print((document.get("name") as! String) + "'s FCM Token: " + (fcm))
+            } else {
+                print("Document does not exist")
+            }
+        }
 
         print(self.defaults.string(forKey: "userName")! + " is at the Subin door.")
     }

@@ -97,6 +97,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler:
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
+        Messaging.messaging().appDidReceiveMessage(notification.request.content.userInfo)
         process(notification)
         completionHandler([[.banner, .sound]])
     }
@@ -106,6 +107,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
+        Messaging.messaging().appDidReceiveMessage(response.notification.request.content.userInfo)
         completionHandler()
         process(response.notification)
     }
@@ -115,9 +117,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = notification.request.content.userInfo
       // 2
       UIApplication.shared.applicationIconBadgeNumber = 0
-        if let data = userInfo["data"] as? String {
-            print("SENDERS FCM " + data)
-      }
+//        if let data = userInfo["data"] as? String {
+//            print("SENDERS FCM " + data)
+//      }
+        print(userInfo)
     }
 }
 
