@@ -71,6 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
       let token = tokenParts.joined()
       print("Device Token: \(token)")
+        
+    Messaging.messaging().apnsToken = deviceToken
       //OJU
       /*let pushManager = PushNotificationManager(userID: "currently_logged_in_user_id")
       pushManager.updateFirestorePushTokenIfNeeded()*/

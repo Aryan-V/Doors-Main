@@ -166,6 +166,10 @@ class NotifyViewController: UIViewController {
         
         save(testMessage)
         
+        let sender = PushNotificationSender()
+        
+//        sender.sendPushNotification(to: <#T##String#>, title: "Nabeel Door", body: "Sent from Aryan's iPhone.")
+        
         print(self.defaults.string(forKey: "userName")! + " is at the Nabeel door.")
     }
     
