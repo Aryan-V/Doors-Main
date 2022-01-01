@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import FirebaseAnalytics
 import FirebaseCore
+import WatchConnectivity
 //OJU
 /*import FirebaseFirestore
 import FirebaseMessaging
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         UNUserNotificationCenter.current().delegate = self
         registerForPushNotifications()
         FirebaseApp.configure()
@@ -106,5 +108,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     ) {
       print("Failed to register: \(error)")
     }
-
 }

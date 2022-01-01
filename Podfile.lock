@@ -504,6 +504,9 @@ PODS:
   - leveldb-library (1.22.1)
   - MessageKit (3.7.0):
     - InputBarAccessoryView (~> 5.4.0)
+  - MMWormhole (2.0.0):
+    - MMWormhole/Core (= 2.0.0)
+  - MMWormhole/Core (2.0.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -528,6 +531,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - JGProgressHUD
   - MessageKit
+  - MMWormhole
   - RealmSwift
   - SDWebImage
 
@@ -555,6 +559,7 @@ SPEC REPOS:
     - JGProgressHUD
     - leveldb-library
     - MessageKit
+    - MMWormhole
     - nanopb
     - PromisesObjC
     - Realm
@@ -584,12 +589,13 @@ SPEC CHECKSUMS:
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
+  MMWormhole: 0cd3fd35a9118b2e2d762b499f54eeaace0be791
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Realm: fac5ecd031fcb81171627b74944c885662d4b266
   RealmSwift: 9b02d25acb46a14756bde9893abb99e2e3675923
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
 
-PODFILE CHECKSUM: 830744c8f5ccc6880196712e50b413424306e197
+PODFILE CHECKSUM: 16d10ecd8f2b468c6bf046d71b92c71c46d8f482
 
 COCOAPODS: 1.11.2

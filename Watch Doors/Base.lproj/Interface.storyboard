@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="19529" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="19514"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Watch_Doors" customModuleProvider="target">
+                    <items>
+                        <label alignment="left" text="Doors" id="6lc-5U-R2Q">
+                            <fontDescription key="font" style="UICTFontTextStyleTitle3"/>
+                        </label>
+                        <button width="1" alignment="left" title="Nabeel Door" id="e0p-Nw-Zbb">
+                            <connections>
+                                <action selector="nabeelDoorPressedWatch" destination="AgC-eL-Hgc" id="Nh1-Lv-HCt"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="LAR Door" id="ufX-6j-JFn">
+                            <connections>
+                                <action selector="larDoorPressedWatch" destination="AgC-eL-Hgc" id="kLX-g9-Gir"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="LAR Elevator" id="x4E-7x-iRr">
+                            <connections>
+                                <action selector="larElevatorPressedWatch" destination="AgC-eL-Hgc" id="9er-nE-ibP"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Subin Door" id="kdL-F1-W9E">
+                            <connections>
+                                <action selector="subinDoorPressedWatch" destination="AgC-eL-Hgc" id="RGN-7e-ZnY"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="larDoorButton" destination="ufX-6j-JFn" id="zLK-iz-AAF"/>
+                        <outlet property="larElevatorDoor" destination="x4E-7x-iRr" id="CiM-0O-vDB"/>
+                        <outlet property="nabeelDoorButton" destination="e0p-Nw-Zbb" id="ekb-i9-qh1"/>
+                        <outlet property="subinDoorButton" destination="kdL-F1-W9E" id="FN9-bE-rQL"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="345"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="AEw-b0-oYE">
+            <objects>
+                <notificationController id="YCC-NB-fut">
+                    <items>
+                        <label alignment="left" text="Alert Label" numberOfLines="0" id="IdU-wH-bcW"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
+                        <segue destination="4sK-HA-Art" kind="relationship" relationship="dynamicNotificationInterface" id="kXh-Jw-8B1"/>
+                        <segue destination="eXb-UN-Cd0" kind="relationship" relationship="dynamicInteractiveNotificationInterface" id="mpB-YA-K8N"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="220" y="643"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="ZPc-GJ-vnh">
+            <objects>
+                <controller id="4sK-HA-Art" customClass="NotificationController" customModule="Watch_Doors" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="643"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="Niz-AI-uX2">
+            <objects>
+                <controller id="eXb-UN-Cd0" customClass="NotificationController" customModule="Watch_Doors" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="345"/>
+        </scene>
+    </scenes>
+</document>

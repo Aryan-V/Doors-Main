@@ -7,6 +7,7 @@ target 'Doors' do
   # Pods for Doors
   
   pod 'Firebase/Core'
+  pod 'MMWormhole'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Firestore'

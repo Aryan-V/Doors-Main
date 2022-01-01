@@ -10,9 +10,9 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import FirebaseAuth
+import WatchConnectivity
 
-class NotifyViewController: UIViewController {
-    
+class NotifyViewController: UIViewController, WCSessionDelegate {
     // all outlets for storyboard objects
     @IBOutlet weak var nabeelDoorButton: UIButton!
     @IBOutlet weak var larDoorButton: UIButton!
@@ -31,6 +31,12 @@ class NotifyViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if WCSession.isSupported() {
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
+        }
         
         // using firebase authentication to anonymously authenticate user
         Auth.auth().signInAnonymously()
@@ -78,6 +84,13 @@ class NotifyViewController: UIViewController {
         
         // display welcome message upon first use of application (depending on whether load or appear runs first)
         self.displayWelcomeName()
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+//        sendNotificationDoor(door: "0013", doorName: "LAR Door.")
+        let door = message["door"]
+        let doorName = message["doorName"]
+        sendNotificationDoor(door: door as! String, doorName: doorName as! String)
     }
     
     // displays initial welcome message with preferences view controller to set name and room
@@ -382,5 +395,17 @@ class NotifyViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        
     }
 }
