@@ -146,6 +146,7 @@
 		0E0C67BF2765B0B300D179B0 /* DoorsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DoorsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E0C67C32765B0B300D179B0 /* DoorsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsUITests.swift; sourceTree = "<group>"; };
 		0E0C67C52765B0B300D179B0 /* DoorsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0E2587F62781106500419A04 /* Doors WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Doors WidgetExtension.entitlements"; sourceTree = "<group>"; };
 		0E3CB16427667D1D0031F80D /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		0E3CB166276697710031F80D /* NotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyViewController.swift; sourceTree = "<group>"; };
 		0EA2E9112766E70100E0C782 /* Doors.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Doors.entitlements; sourceTree = "<group>"; };
@@ -247,6 +248,7 @@
 		0E0C67962765B0B200D179B0 = {
 			isa = PBXGroup;
 			children = (
+				0E2587F62781106500419A04 /* Doors WidgetExtension.entitlements */,
 				0E0C67A12765B0B200D179B0 /* Doors */,
 				0EBF8BB5277C0C37001845D1 /* Watch Doors */,
 				0EBF8BC3277C0C38001845D1 /* Watch Doors WatchKit Extension */,
@@ -603,13 +605,13 @@
 			projectRoot = "";
 			targets = (
 				0E0C679E2765B0B200D179B0 /* Doors */,
-				0E0C67B42765B0B300D179B0 /* DoorsTests */,
-				0E0C67BE2765B0B300D179B0 /* DoorsUITests */,
 				0EBF8BB3277C0C37001845D1 /* Watch Doors */,
 				0EBF8BBE277C0C38001845D1 /* Watch Doors WatchKit Extension */,
+				0EC22614277EE2F800E9CB86 /* Doors WidgetExtension */,
+				0E0C67B42765B0B300D179B0 /* DoorsTests */,
+				0E0C67BE2765B0B300D179B0 /* DoorsUITests */,
 				0EBF8BD3277C0C39001845D1 /* Watch DoorsTests */,
 				0EBF8BDD277C0C39001845D1 /* Watch DoorsUITests */,
-				0EC22614277EE2F800E9CB86 /* Doors WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1396,6 +1398,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Doors WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FTJ26BJ93J;
@@ -1426,6 +1429,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Doors WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FTJ26BJ93J;

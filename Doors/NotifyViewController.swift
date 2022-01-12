@@ -28,6 +28,9 @@ class NotifyViewController: UIViewController, WCSessionDelegate {
     let prefview = PreferencesViewController()
     let nf = NumberFormatter()
     let feedbackGenerator = UIImpactFeedbackGenerator()
+    
+    // data between widget and app
+    let widgetDefaults = UserDefaults(suiteName: "group.aryanvaswani.Doors.widgetcache")
 
     override func viewDidLoad() {
         super.viewDidLoad()

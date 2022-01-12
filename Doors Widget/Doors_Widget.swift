@@ -69,7 +69,13 @@ struct Doors_Widget: Widget {
 
 struct Doors_Widget_Previews: PreviewProvider {
     static var previews: some View {
-        Doors_WidgetEntryView(entry: SimpleEntry(date: Date()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        Group {
+            Doors_WidgetEntryView(entry: SimpleEntry(date: Date()))
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+            Doors_WidgetEntryView(entry: SimpleEntry(date: Date()))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+            Doors_WidgetEntryView(entry: SimpleEntry(date: Date()))
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
+        }
     }
 }
